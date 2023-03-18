@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tip Calculator</title>
+    <style>
+        * {
+            /* margin: 0px;
+            padding: 0px; */
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            overflow: hidden;
+        }
+
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        body {
+            background: #716898;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100vw;
+            height: 100vh;
+            margin: 0px;
+        }
+
+        .container {
+            color: white;
+            background-color: black;
+            border: 1px solid black;
+            width: 400px;
+            height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            border-radius: 25px;
+            box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+         }
+
+        .first,
+        .second {
+            width: 80%;
+        }
+
+        .first {
+            display: flex;
+            align-items: start;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .second {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .innerresult {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .first input {
+            width: 98%;
+            height: 30px;
+            border-radius: 14px;
+            border: 1px solid #000;
+            font-weight: bolder;
+        }
+
+        input:focus {
+            outline: none;
+        }
+
+        @media only screen and (max-width:500px) {
+            .container {
+                width: 100%;
+                height: 70vh;
+            }
+        }
+
+        .persons button {
+            border-radius: 50%;
+            border: 1px solid black;
+            height: 25px;
+            width: 25px;
+            font-weight: bolder;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="first">
+            <h2>Total Bill</h2>
+            <input type="number" name="totalBill" id="totalBill" placeholder="  $0.00 " onkeyup="calculateBill()">
+            <h2>Tip %</h2>
+            <input type="number" name="tipPercent" id="tipPercent" placeholder="  0.00 %" onkeyup="calculateBill()">
+        </div>
+        <div class="second">
+            <div class="persons">
+                <div class="innerresult">
+                    <p>Number of persons</p>
+                    <div> <button id="dec" onclick="dec()">-</button>
+                        <span id="noOfPersons">1</span>
+                        <button id="inc" onclick="inc()">+</button>
+                    </div>
+                </div>
+            </div>
+            <div class="result">
+                <div class="innerresult">
+                    <p>Total per person</p>
+                    <span id="totalPerPerson">
+                        <span>$</span>0.00</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    const totalBill = document.getElementById('totalBill');
+    const tipPercent = document.getElementById('tipPercent');
+    const noOfPersons = document.getElementById('noOfPersons');
+    const totalPerPerson = document.getElementById('totalPerPerson')
+
+    // Calculating Bill per Person
+    const calculateBill = () => {
+        let bill = Number(totalBill.value);
+        let persons = Number(noOfPersons.innerText);
+        let tip =( Number(tipPercent.value))/100*totalBill.value;
+        let total = (bill+tip)/ persons;
+        totalPerPerson.innerText = "$" + total.toFixed(2);
+        console.log(bill);
+        console.log(persons);
+        console.log(tip);
+        console.log(total);
+    }
+
+    // incrementing Number of persons
+    const inc = () => {
+        let persons = Number(noOfPersons.innerText);
+        noOfPersons.innerText = ++persons;
+        calculateBill();
+    }
+
+    // Decrementing Number of persons
+    const dec = () => {
+
+        let persons = Number(noOfPersons.innerText);
+        if (persons > 1) {
+            noOfPersons.innerText = --persons;
+        }
+        calculateBill();
+    }
+
+</script>
+
+</html>
